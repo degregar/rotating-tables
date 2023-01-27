@@ -4,6 +4,7 @@
   "description": "",
   "main": "cli.js",
   "dependencies": {
+    "commander": "^10.0.0",
     "csv-stream": "^0.2.0",
     "fast-csv": "^4.3.6"
   },
@@ -23,6 +24,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha -r ts-node/register \"./src/**/*.spec.ts\" --exit",
     "build": "webpack",
+    "build:watch": "webpack --watch",
     "run": "node cli.js ./src/tests/input-data.csv > ./local/output-data.csv"
   },
   "author": "",
