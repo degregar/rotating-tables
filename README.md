@@ -2,6 +2,19 @@
 
 This is an algorithm that rotates numbers in a table.
 
+## Installation
+
+```
+npm install
+npm run build
+```
+
+## How to use?
+
+```
+node cli.js input.csv > output.csv
+```
+
 ## How does the algorithm work?
 
 ### Rings 
