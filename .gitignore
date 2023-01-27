@@ -2,3 +2,4 @@
 node_modules
 local/*
 cli.js
+.DS_Store
