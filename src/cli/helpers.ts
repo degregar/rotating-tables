@@ -1,10 +1,13 @@
 import { FlatTable } from "../flat-table/flat-table";
 import { InvalidInputError } from "../errors";
+import { SubstituteTableRotator } from "../substitute-table-rotator/substitute-table-rotator";
 
 export const isHeaderRow = (line: any): boolean => !!line.id?.startsWith("id") && !!line.json?.startsWith("json");
 
-export const formatOutput = (output: { id: string; json: any; is_valid: boolean }): string => {
-  return `${output.id},"${output.json}",${output.is_valid}`;
+export const formatOutput = (output: { id: string; values: number[]; is_valid: boolean }): string[] => {
+  const json = JSON.stringify(output.values).replace(/,/g, ", ");
+
+  return [output.id, json, output.is_valid.toString()];
 };
 
 export const jsonToFlatTable = (json: string): FlatTable => {
@@ -16,8 +19,18 @@ export const jsonToFlatTable = (json: string): FlatTable => {
   }
 };
 
-export const handleRow = (row: InputRow): string => {
-  return row.id;
+export const handleRow = (row: InputRow): string[] => {
+  const flatTable = jsonToFlatTable(row.json);
+  const isValid = flatTable.isValid();
+
+  if (!isValid) {
+    return formatOutput({ id: row.id, values: flatTable.getValues(), is_valid: isValid });
+  }
+
+  const rotator = new SubstituteTableRotator(flatTable);
+  const rotatedTable = rotator.rotateClockwise();
+
+  return formatOutput({ id: row.id, values: rotatedTable.getValues(), is_valid: isValid });
 };
 
 export type InputRow = {

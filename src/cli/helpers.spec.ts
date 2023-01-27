@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { formatOutput, isHeaderRow, isInputRow, jsonToFlatTable } from "./helpers";
+import { formatOutput, handleRow, isHeaderRow, isInputRow, jsonToFlatTable } from "./helpers";
 import { FlatTable } from "../flat-table/flat-table";
 
 describe("isHeaderRow", () => {
@@ -19,14 +19,13 @@ describe("isHeaderRow", () => {
 describe("formatOutput", () => {
   it("should return a string", () => {
     // given
-    const input = { id: "1", json: "[4, 1, 2, 7, 5, 3, 8, 9, 6]", is_valid: true };
+    const input = { id: "1", values: [4, 1, 2, 7, 5, 3, 8, 9, 6], is_valid: true };
 
     // when
     const formattedOutput = formatOutput(input);
 
     // then
-    expect(formattedOutput).to.be.a("string");
-    expect(formattedOutput).to.equal('1,"[4, 1, 2, 7, 5, 3, 8, 9, 6]",true');
+    expect(formattedOutput).to.eql(["1", "[4, 1, 2, 7, 5, 3, 8, 9, 6]", "true"]);
   });
 });
 
@@ -65,5 +64,40 @@ describe("jsonToFlatTable", () => {
 
     // then
     expect(jsonToFlatTableFn).to.throw(Error, "Invalid JSON");
+  });
+});
+
+describe("handleRow", () => {
+  it("should return rotated a 2x2 table", () => {
+    // given
+    const row = { id: "1", json: "[40, 20, 90, 10]" };
+
+    // when
+    const output = handleRow(row);
+
+    // then
+    expect(output).to.eql(["1", "[90, 40, 10, 20]", "true"]);
+  });
+
+  it("should return rotated a 3x3 table", () => {
+    // given
+    const row = { id: "1", json: "[1, 2, 3, 4, 5, 6, 7, 8, 9]" };
+
+    // when
+    const output = handleRow(row);
+
+    // then
+    expect(output).to.eql(["1", "[4, 1, 2, 7, 5, 3, 8, 9, 6]", "true"]);
+  });
+
+  it("should return rotated a 4x4 table", () => {
+    // given
+    const row = { id: "1", json: "[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]" };
+
+    // when
+    const output = handleRow(row);
+
+    // then
+    expect(output).to.eql(["1", "[5, 1, 2, 3, 9, 10, 6, 4, 13, 11, 7, 8, 14, 15, 16, 12]", "true"]);
   });
 });
