@@ -32,10 +32,11 @@ The first ring is `1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5`. The second ring is 
 
 ### Rotating a ring
 
-We rotate a ring by moving the first element to the end of the ring. For example, if we rotate the first ring of the 3x3 table, we get:
+We rotate a ring by moving all elements in a clockwise direction.
 
+For the 3x3 example, after rotation we get:
 ```
-3 1 2
+4 1 2
 7 5 3
 8 9 6
 ```
