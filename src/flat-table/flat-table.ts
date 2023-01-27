@@ -4,6 +4,8 @@ export class FlatTable implements Table<number[]> {
   constructor(private values: number[]) {}
 
   getValues(): number[] {
+    if (!this.isValid()) return [];
+
     return this.values;
   }
 
@@ -27,5 +29,10 @@ export class FlatTable implements Table<number[]> {
   setByCoordinates(row: number, col: number, value: number): void {
     const base = this.getBase();
     this.values[row * base + col] = value;
+  }
+
+  isValid(): boolean {
+    const base = this.getBase();
+    return base * base === this.values.length;
   }
 }

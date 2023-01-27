@@ -10,4 +10,6 @@ export interface Table<TType> {
   getByCoordinates(row: number, col: number): number;
 
   setByCoordinates(row: number, col: number, value: number): void;
+
+  isValid(): boolean;
 }

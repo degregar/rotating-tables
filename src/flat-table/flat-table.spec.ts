@@ -29,4 +29,37 @@ describe("Flat Table", () => {
     // then
     expect(table.getValues()).to.eql([1, 2, 3, 4, 5, 6, 7, 8, 9]);
   });
+
+  describe("given table is considered valid if it is a square", () => {
+    const invalid = [
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      [2, -0],
+      [2, -5, -5],
+      [1, 1, 1, 1, 1],
+    ];
+
+    for (const values of invalid) {
+      it(`should be invalid and return empty array for input: ${values}`, () => {
+        // given
+        const table = new FlatTable(values);
+
+        // then
+        expect(table.isValid()).to.be.false;
+        expect(table.getValues()).to.eql([]);
+      });
+    }
+
+    const valid = [[1, 2, 3, 4, 5, 6, 7, 8, 9], [40, 20, 90, 10], [-5]];
+
+    for (const values of valid) {
+      it(`should be valid and return correct values for input: ${values}`, () => {
+        // given
+        const table = new FlatTable(values);
+
+        // then
+        expect(table.isValid()).to.be.true;
+        expect(table.getValues()).to.eql(values);
+      });
+    }
+  });
 });
