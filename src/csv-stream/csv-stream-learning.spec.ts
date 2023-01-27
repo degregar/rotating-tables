@@ -17,7 +17,7 @@ describe("CSV Stream learning tests", () => {
     });
 
     // when
-    fs.createReadStream("./src/csv-stream/data.csv")
+    fs.createReadStream("./src/tests/input-data.csv")
       .pipe(csvStream)
       .on("data", (data: any) => {
         if (isHeaderRow(data)) {
