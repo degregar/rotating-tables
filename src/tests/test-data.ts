@@ -1,7 +1,10 @@
 const arrayFrom = (n: number) => Array.from(Array(n).keys()).map((x) => x + 1);
 
-export const twoByTwoTable = arrayFrom(2 * 2);
-export const threeByThreeTable = arrayFrom(3 * 3);
-export const fourByFourTable = arrayFrom(4 * 4);
-export const fiveByFiveTable = arrayFrom(5 * 5);
-export const sixBySixTable = arrayFrom(6 * 6);
+export const tableWithBase = (base: number) => arrayFrom(base * base);
+
+export const twoByTwoTable = tableWithBase(2);
+export const threeByThreeTable = tableWithBase(3);
+export const fourByFourTable = tableWithBase(4);
+export const fiveByFiveTable = tableWithBase(5);
+export const sixBySixTable = tableWithBase(6);
+
