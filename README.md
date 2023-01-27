@@ -6,7 +6,7 @@ This is an algorithm that rotates numbers in a table.
 
 ### Rings 
 
-We use a notion of a ring. It is a set of numbers that lay at the same distance from the center of the table. The distance is measured by the number of steps that we need to make to get from one number to another. The ring is a set of numbers that are at the same distance from the center of the table.
+We use a notion of a ring. The ring is a set of numbers that are at the same distance from the center of the table.
 
 For example:
 
