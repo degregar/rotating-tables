@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import { FlatTable } from "../flat-table/flat-table";
-import { fourByFourTable, threeByThreeTable, twoByTwoTable } from "../test-data";
+import { fourByFourTable, threeByThreeTable, twoByTwoTable } from "../tests/test-data";
 import { SubstituteTableRotator } from "./substitute-table-rotator";
 
 describe("SubstituteTableRotator", () => {

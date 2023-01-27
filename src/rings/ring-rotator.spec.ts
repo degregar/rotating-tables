@@ -1,6 +1,6 @@
 import { FlatTable } from "../flat-table/flat-table";
 import { expect } from "chai";
-import { fourByFourTable, threeByThreeTable, twoByTwoTable } from "../test-data";
+import { fourByFourTable, threeByThreeTable, twoByTwoTable } from "../tests/test-data";
 import { RingsController } from "./rings-controller";
 import { RingRotator } from "./ring-rotator";
 

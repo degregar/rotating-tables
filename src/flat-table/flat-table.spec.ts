@@ -1,6 +1,6 @@
 import { FlatTable } from "./flat-table";
 import { expect } from "chai";
-import { threeByThreeTable, twoByTwoTable } from "../test-data";
+import { threeByThreeTable, twoByTwoTable } from "../tests/test-data";
 
 describe("Flat Table", () => {
   it("should create a 2x2 table", () => {

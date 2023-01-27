@@ -1,7 +1,7 @@
 import { expect } from "chai";
 import { FlatTable } from "../flat-table/flat-table";
 import { RingsController } from "./rings-controller";
-import { fiveByFiveTable, fourByFourTable, sixBySixTable, threeByThreeTable, twoByTwoTable } from "../test-data";
+import { fiveByFiveTable, fourByFourTable, sixBySixTable, threeByThreeTable, twoByTwoTable } from "../tests/test-data";
 import { RingRotator } from "./ring-rotator";
 
 describe("Flat Table", () => {
