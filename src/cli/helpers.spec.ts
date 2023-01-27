@@ -1,5 +1,6 @@
 import { expect } from "chai";
-import { formatOutput, isHeaderRow, isInputRow } from "./helpers";
+import { formatOutput, isHeaderRow, isInputRow, jsonToFlatTable } from "./helpers";
+import { FlatTable } from "../flat-table/flat-table";
 
 describe("isHeaderRow", () => {
   it("should return true", () => {
@@ -40,5 +41,29 @@ describe("isInputRow", () => {
 
   it("should return false if given a string", () => {
     expect(isInputRow("1,[4, 1, 2, 7, 5, 3, 8, 9, 6]")).to.be.false;
+  });
+});
+
+describe("jsonToFlatTable", () => {
+  it("should return a FlatTable 3x3", () => {
+    // given
+    const json = "[4, 1, 2, 7, 5, 3, 8, 9, 6]";
+
+    // when
+    const flatTable = jsonToFlatTable(json);
+
+    // then
+    expect(flatTable).to.be.an.instanceOf(FlatTable);
+  });
+
+  it("should throw an error for invalid JSON", () => {
+    // given
+    const json = "[4, 1, 2, 7, 5, 3, 8, 9, 6";
+
+    // when
+    const jsonToFlatTableFn = () => jsonToFlatTable(json);
+
+    // then
+    expect(jsonToFlatTableFn).to.throw(Error, "Invalid JSON");
   });
 });
