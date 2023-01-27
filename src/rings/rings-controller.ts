@@ -46,6 +46,16 @@ export class RingsController {
     return map;
   }
 
+  replaceRing(ring: number, newRing: Ring) {
+    this.assertRingNumber(ring);
+
+    const table = this.table;
+
+    for (const [coordinates, value] of newRing.entries()) {
+      table.setByCoordinates(coordinates.row, coordinates.col, value);
+    }
+  }
+
   private assertRingNumber(ring: number) {
     if (ring <= 0 || ring > this.getNumberOfRings()) {
       throw new Error(`Ring number ${ring} is out of range`);

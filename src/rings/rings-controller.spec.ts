@@ -2,6 +2,7 @@ import { expect } from "chai";
 import { FlatTable } from "../flat-table/flat-table";
 import { RingsController } from "./rings-controller";
 import { fiveByFiveTable, fourByFourTable, sixBySixTable, threeByThreeTable, twoByTwoTable } from "../test-data";
+import { RingRotator } from "./ring-rotator";
 
 describe("Flat Table", () => {
   it("should return 1 ring for 2x2 table", () => {
@@ -196,5 +197,42 @@ describe("Flat Table", () => {
       [{ row: 3, col: 1 }, 17],
       [{ row: 2, col: 1 }, 12],
     ]);
+  });
+
+  it("should rotate and replace 1st ring for 2x2 table", () => {
+    // given
+    const table = new FlatTable([...twoByTwoTable]);
+    const controller = new RingsController(table);
+    const rotator = new RingRotator(controller.getRing(1));
+
+    // when
+    controller.replaceRing(1, rotator.rotateClockwise());
+
+    // then
+    expect(table.getByCoordinates(0, 0)).to.eql(3);
+    expect(table.getByCoordinates(0, 1)).to.eql(1);
+    expect(table.getByCoordinates(1, 1)).to.eql(2);
+    expect(table.getByCoordinates(1, 0)).to.eql(4);
+  });
+
+  it("should rotate and replace 1st ring for 3x3 table", () => {
+    // given
+    const table = new FlatTable([...threeByThreeTable]);
+    const controller = new RingsController(table);
+    const rotator = new RingRotator(controller.getRing(1));
+
+    // when
+    controller.replaceRing(1, rotator.rotateClockwise());
+
+    // then
+    expect(table.getByCoordinates(0, 0)).to.eql(4);
+    expect(table.getByCoordinates(0, 1)).to.eql(1);
+    expect(table.getByCoordinates(0, 2)).to.eql(2);
+    expect(table.getByCoordinates(1, 0)).to.eql(7);
+    expect(table.getByCoordinates(1, 1)).to.eql(5);
+    expect(table.getByCoordinates(1, 2)).to.eql(3);
+    expect(table.getByCoordinates(2, 0)).to.eql(8);
+    expect(table.getByCoordinates(2, 1)).to.eql(9);
+    expect(table.getByCoordinates(2, 2)).to.eql(6);
   });
 });

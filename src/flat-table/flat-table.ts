@@ -23,4 +23,9 @@ export class FlatTable implements Table<number[]> {
     const base = this.getBase();
     return this.values[row * base + col];
   }
+
+  setByCoordinates(row: number, col: number, value: number): void {
+    const base = this.getBase();
+    this.values[row * base + col] = value;
+  }
 }

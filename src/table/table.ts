@@ -8,4 +8,6 @@ export interface Table<TType> {
   isOdd(): boolean;
 
   getByCoordinates(row: number, col: number): number;
+
+  setByCoordinates(row: number, col: number, value: number): void;
 }
