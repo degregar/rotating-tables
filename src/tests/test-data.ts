@@ -8,3 +8,5 @@ export const fourByFourTable = tableWithBase(4);
 export const fiveByFiveTable = tableWithBase(5);
 export const sixBySixTable = tableWithBase(6);
 
+
+export const twoByTwoTableWithNullishValues = [0, 1, 2, 3];

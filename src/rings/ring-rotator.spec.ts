@@ -1,6 +1,6 @@
 import { FlatTable } from "../flat-table/flat-table";
 import { expect } from "chai";
-import { fourByFourTable, threeByThreeTable, twoByTwoTable } from "../tests/test-data";
+import { fourByFourTable, threeByThreeTable, twoByTwoTable, twoByTwoTableWithNullishValues } from "../tests/test-data";
 import { RingsController } from "./rings-controller";
 import { RingRotator } from "./ring-rotator";
 
@@ -60,5 +60,18 @@ describe("RingRotator", () => {
 
     // then
     expect(rotated).to.eql([10, 6, 7, 11]);
+  });
+
+  it("should rotate the first ring from 2x2 with nullish values", () => {
+    // given
+    const table = new FlatTable(twoByTwoTableWithNullishValues);
+    const controller = new RingsController(table);
+    const rotator = new RingRotator(controller.getRing(1));
+
+    // when
+    const rotated = Array.from(rotator.rotateClockwise().values());
+
+    // then
+    expect(rotated).to.eql([2, 0, 1, 3]);
   });
 });
