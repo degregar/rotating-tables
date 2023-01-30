@@ -5,26 +5,38 @@ const { format } = require("@fast-csv/format");
 
 import { handleRow, isHeaderRow } from "./cli/helpers";
 
-export const transform = (inputPath: string) => {
-  const csvOutputStream = format({
+export function createCsvOutputStream() {
+  return format({
     headers: ["id", "json", "is_valid"],
     quoteColumns: [false, true, false],
     quoteHeaders: false,
   });
+}
+
+export function assertFileExists(inputPath: string) {
+  if (!fs.existsSync(inputPath)) {
+    throw new Error("Input file does not exist");
+  }
+}
+
+export function createCsvInputStream() {
+  const csvInputStream = csv.createStream({
+    columns: ["id", "json"],
+    endLine: "\n",
+    escapeChar: '"',
+    enclosedChar: '"',
+  });
+  return csvInputStream;
+}
+
+export const transform = (inputPath: string) => {
+  const csvOutputStream = createCsvOutputStream();
   csvOutputStream.pipe(process.stdout);
 
   try {
-    if (!fs.existsSync(inputPath)) {
-      console.error("Input file does not exist");
-      process.exit(1);
-    }
+    assertFileExists(inputPath);
 
-    const csvInputStream = csv.createStream({
-      columns: ["id", "json"],
-      endLine: "\n",
-      escapeChar: '"',
-      enclosedChar: '"',
-    });
+    const csvInputStream = createCsvInputStream();
 
     fs.createReadStream(inputPath)
       .pipe(csvInputStream)
