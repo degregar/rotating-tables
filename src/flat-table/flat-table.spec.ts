@@ -50,7 +50,7 @@ describe("Flat Table", () => {
       });
     }
 
-    const valid = [[1, 2, 3, 4, 5, 6, 7, 8, 9], [40, 20, 90, 10], [-5]];
+    const valid = [[1, 2, 3, 4, 5, 6, 7, 8, 9], [40, 20, 90, 10], [-5], [0, 1, 2, 3], [1, 2, 0, 3]];
 
     for (const values of valid) {
       it(`should be valid and return correct values for input: ${values}`, () => {

@@ -11,13 +11,13 @@ export class RingRotator {
     const lastKey = keys[keys.length - 1];
     const lastValue = this.ring.get(lastKey);
 
-    if (!lastKey || !lastValue) {
+    if (!lastKey || lastValue === undefined) {
       throw new Error("Ring is empty");
     }
 
     for (let i = noOfItems - 1; i > 0; i--) {
       const prevValue = this.ring.get(keys[i - 1]);
-      if (!prevValue) {
+      if (prevValue === undefined) {
         throw new Error("Out of range");
       }
       newRing.set(keys[i], prevValue);
