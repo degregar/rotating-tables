@@ -3,7 +3,7 @@ const csv = require("csv-stream");
 const fs = require("fs");
 
 import { FlatTable } from "../flat-table/flat-table";
-import { InvalidInputError } from "../errors";
+import { InvalidInputError, MissingInputFileError } from "../errors";
 import { SubstituteTableRotator } from "../substitute-table-rotator/substitute-table-rotator";
 
 export const isHeaderRow = (line: any): boolean => !!line.id?.startsWith("id") && !!line.json?.startsWith("json");
@@ -56,7 +56,7 @@ export function createCsvOutputStream() {
 
 export function assertFileExists(inputPath: string) {
   if (!fs.existsSync(inputPath)) {
-    throw new Error("Input file does not exist");
+    throw new MissingInputFileError();
   }
 }
 
@@ -90,9 +90,9 @@ export const transform = (inputPath: string) => {
       .on("end", () => {
         csvOutputStream.end();
       });
-  } catch (error) {
+  } catch (error: any) {
     csvOutputStream.end();
-    console.error(error);
+    console.error(error.message);
     process.exit(1);
   }
 };
