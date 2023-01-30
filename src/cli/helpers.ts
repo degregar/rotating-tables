@@ -19,7 +19,7 @@ export const jsonToFlatTable = (json: string): FlatTable => {
     const values = JSON.parse(json);
     return new FlatTable(values);
   } catch (e) {
-    throw new InvalidInputError(`Invalid JSON: ${json}`);
+    throw new InvalidInputError(`Invalid JSON`);
   }
 };
 
@@ -70,6 +70,29 @@ export function createCsvInputStream() {
   return csvInputStream;
 }
 
+type CsvOutputStream = ReturnType<typeof createCsvOutputStream>;
+
+const quitGracefully = (csvOutputStream: CsvOutputStream, error?: any) => {
+  csvOutputStream.end();
+
+  if (error) {
+    console.error(`Error while processing input file: ${error.message}`);
+    process.exit(1);
+  }
+};
+
+
+const handleIncomingData = (csvOutputStream: CsvOutputStream) => (data: any) => {
+  try {
+    if (!isHeaderRow(data)) {
+      const output = handleRow(data);
+      csvOutputStream.write(output, "utf-8");
+    }
+  } catch (error: any) {
+    quitGracefully(csvOutputStream, error);
+  }
+};
+
 export const transform = (inputPath: string) => {
   const csvOutputStream = createCsvOutputStream();
   csvOutputStream.pipe(process.stdout);
@@ -81,18 +104,11 @@ export const transform = (inputPath: string) => {
 
     fs.createReadStream(inputPath)
       .pipe(csvInputStream)
-      .on("data", (data: any) => {
-        if (!isHeaderRow(data)) {
-          const output = handleRow(data);
-          csvOutputStream.write(output, "utf-8");
-        }
-      })
+      .on("data", handleIncomingData(csvOutputStream))
       .on("end", () => {
-        csvOutputStream.end();
+        quitGracefully(csvOutputStream);
       });
   } catch (error: any) {
-    csvOutputStream.end();
-    console.error(error.message);
-    process.exit(1);
+    quitGracefully(csvOutputStream, error);
   }
 };
