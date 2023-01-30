@@ -33,6 +33,6 @@ export class FlatTable implements Table<number[]> {
 
   isValid(): boolean {
     const base = this.getBase();
-    return base * base === this.values.length;
+    return base > 0 && base * base === this.values.length;
   }
 }

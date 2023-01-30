@@ -36,6 +36,7 @@ describe("Flat Table", () => {
       [2, -0],
       [2, -5, -5],
       [1, 1, 1, 1, 1],
+      []
     ];
 
     for (const values of invalid) {
