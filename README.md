@@ -15,6 +15,12 @@ npm run build
 node cli.js input.csv > output.csv
 ```
 
+## How to perform unit tests?
+
+```
+npm test
+```
+
 ## How does the algorithm work?
 
 ### Rings 
